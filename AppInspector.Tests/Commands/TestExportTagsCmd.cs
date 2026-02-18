@@ -59,4 +59,32 @@ public class TestExportTagsCmd
         };
         Assert.Throws<OpException>(() => new ExportTagsCommand(options));
     }
+
+    [Fact]
+    public void ExportJsonSerialization()
+    {
+        ExportTagsOptions options = new()
+        {
+            IgnoreDefaultRules = true,
+            CustomRulesPath = testRulesPath
+        };
+        ExportTagsCommand command = new(options, factory);
+        var result = command.GetResult();
+        
+        // Test JSON serialization to ensure tags are included
+        var jsonOptions = new System.Text.Json.JsonSerializerOptions
+        {
+            WriteIndented = true,
+            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault
+        };
+        
+        // Serialize using the actual runtime type (the fix)
+        string json = System.Text.Json.JsonSerializer.Serialize(result, result.GetType(), jsonOptions);
+        
+        // Verify tags are present in JSON
+        Assert.Contains("Test.Tags.Linux", json);
+        Assert.Contains("Test.Tags.Windows", json);
+        Assert.Contains("tagsList", json);
+        Assert.Contains("appVersion", json);
+    }
 }
