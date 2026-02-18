@@ -71,17 +71,26 @@ public class TestExportTagsCmd
         ExportTagsCommand command = new(options, factory);
         var result = command.GetResult();
         
-        // Test JSON serialization to ensure tags are included
-        var jsonOptions = new System.Text.Json.JsonSerializerOptions
+        // Test JSON serialization via the production JsonWriter to ensure tags are included
+        using var memoryStream = new MemoryStream();
+        using var streamWriter = new StreamWriter(memoryStream);
+        
+        // Use the JsonWriter that production code uses
+        var jsonWriter = new Microsoft.ApplicationInspector.CLI.Writers.JsonWriter(streamWriter, factory);
+        var cliOptions = new Microsoft.ApplicationInspector.CLI.CLIExportTagsCmdOptions
         {
-            WriteIndented = true,
-            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault
+            IgnoreDefaultRules = true,
+            CustomRulesPath = testRulesPath
         };
         
-        // Serialize using the actual runtime type (the fix)
-        string json = System.Text.Json.JsonSerializer.Serialize(result, result.GetType(), jsonOptions);
+        jsonWriter.WriteResults(result, cliOptions, autoClose: false);
+        streamWriter.Flush();
         
-        // Verify tags are present in JSON
+        memoryStream.Position = 0;
+        using var reader = new StreamReader(memoryStream);
+        string json = reader.ReadToEnd();
+        
+        // Verify tags are present in JSON output from JsonWriter
         Assert.Contains("Test.Tags.Linux", json);
         Assert.Contains("Test.Tags.Windows", json);
         Assert.Contains("tagsList", json);
