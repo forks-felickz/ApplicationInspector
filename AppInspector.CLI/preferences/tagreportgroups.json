@@ -438,27 +438,27 @@
         "dataRef": "PipelineTools",
         "patterns": [
           {
-            "searchPattern": "^Pipeline.CompilerSettings.*",
+            "searchPattern": "^Metadata.Pipeline.CompilerSettings.*",
             "displayName": "Compiler Settings",
             "detectedIcon": "fas fa-list-ul"
           },
           {
-            "searchPattern": "^Pipeline.Packaging.CodeSigning$",
+            "searchPattern": "^Metadata.Pipeline.Packaging.CodeSigning$",
             "displayName": "Code Signing",
             "detectedIcon": "fas fa-signature"
           },
           {
-            "searchPattern": "^Pipeline.Linter.*",
+            "searchPattern": "^Metadata.Pipeline.Linter.*",
             "displayName": "Linters",
             "detectedIcon": "fas fa-spell-check"
           },
           {
-            "searchPattern": "^Pipeline.StaticAnalysis.*",
+            "searchPattern": "^Metadata.Pipeline.StaticAnalysis.*",
             "displayName": "Static Analyzers",
             "detectedIcon": "fas fa-microscope "
           },
           {
-            "searchPattern": "^Pipeline.Packaging.*",
+            "searchPattern": "^Metadata.Pipeline.Packaging.*",
             "displayName": "Packaging",
             "detectedIcon": "fas fa-truck-loading"
           }

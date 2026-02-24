@@ -4,7 +4,7 @@
     "id": "AI053300",
     "description": "General AntiMalware",
     "tags": [
-      "Pipeline.StaticAnalysis.AntiMalware"
+      "Metadata.Pipeline.StaticAnalysis.AntiMalware"
     ],
     "severity": "critical",
     "patterns": [
@@ -19,6 +19,9 @@
         ],
         "confidence": "high"
       }
+    ],
+    "must-match": [
+      "uses: some/antimalware-action@v1"
     ]
   },
   {
@@ -26,7 +29,7 @@
     "id": "AI053400",
     "description": "Finds vulnerabilities in Python code.",
     "tags": [
-      "Pipeline.StaticAnalysis.Bandit"
+      "Metadata.Pipeline.StaticAnalysis.Bandit"
     ],
     "severity": "critical",
     "patterns": [
@@ -41,6 +44,9 @@
         ],
         "confidence": "high"
       }
+    ],
+    "must-match": [
+      "run: bandit -r ."
     ]
   },
   {
@@ -48,7 +54,7 @@
     "id": "AI053500",
     "description": "Validates compiler and linker security settings.",
     "tags": [
-      "Pipeline.CompilerSettings.BinSkim"
+      "Metadata.Pipeline.CompilerSettings.BinSkim"
     ],
     "severity": "critical",
     "patterns": [
@@ -63,6 +69,9 @@
         ],
         "confidence": "high"
       }
+    ],
+    "must-match": [
+      "uses: microsoft/binskim-action@v1"
     ]
   },
   {
@@ -70,7 +79,7 @@
     "id": "AI053600",
     "description": "General code signing.",
     "tags": [
-      "Pipeline.Packaging.CodeSigning"
+      "Metadata.Pipeline.Packaging.CodeSigning"
     ],
     "severity": "critical",
     "patterns": [
@@ -86,14 +95,17 @@
         "confidence": "high",
         "_comment": "uses regex to support 'codesigning' or other variations"
       }
+    ],
+    "must-match": [
+      "uses: some/codesigning-action@v1"
     ]
   },
   {
     "name": "Pipeline Tool (CodeQL)",
     "id": "AI053700",
-    "description": "Identifies patterns in code.",
+    "description": "Identifies use of GitHub CodeQL for static analysis in CI/CD pipelines.",
     "tags": [
-      "Pipeline.StaticAnalysis.CodeQL"
+      "Metadata.Pipeline.StaticAnalysis.CodeQL"
     ],
     "severity": "critical",
     "patterns": [
@@ -108,6 +120,15 @@
         ],
         "confidence": "high"
       }
+    ],
+    "must-match": [
+      "uses: github/codeql-action/init@v3",
+      "uses: github/codeql-action/analyze@v3",
+      "name: Initialize CodeQL"
+    ],
+    "must-not-match": [
+      "uses: actions/checkout@v3",
+      "run: echo 'code quality check'"
     ]
   },
   {
@@ -115,7 +136,7 @@
     "id": "AI053800",
     "description": "Identifies problematic coding patterns in JavaScript.",
     "tags": [
-      "Pipeline.Linter.ESLint"
+      "Metadata.Pipeline.Linter.ESLint"
     ],
     "severity": "critical",
     "patterns": [
@@ -130,6 +151,9 @@
         ],
         "confidence": "high"
       }
+    ],
+    "must-match": [
+      "run: npx eslint ."
     ]
   },
   {
@@ -137,7 +161,7 @@
     "id": "AI053900",
     "description": "Analyzer that checks conformance to Microsoft .NET Design Guidelines.",
     "tags": [
-      "Pipeline.StaticAnalysis.FxCop"
+      "Metadata.Pipeline.StaticAnalysis.FxCop"
     ],
     "severity": "critical",
     "patterns": [
@@ -152,6 +176,9 @@
         ],
         "confidence": "high"
       }
+    ],
+    "must-match": [
+      "run: fxcop /file:MyAssembly.dll"
     ]
   },
   {
@@ -159,7 +186,7 @@
     "id": "AI054000",
     "description": "Analyzer that checks for security vulnerabilities in .NET code.",
     "tags": [
-      "Pipeline.StaticAnalysis.ModernCop"
+      "Metadata.Pipeline.StaticAnalysis.ModernCop"
     ],
     "severity": "critical",
     "patterns": [
@@ -174,6 +201,9 @@
         ],
         "confidence": "high"
       }
+    ],
+    "must-match": [
+      "uses: some/moderncop-action@v1"
     ]
   },
   {
@@ -181,7 +211,7 @@
     "id": "AI054100",
     "description": "Identifies package manager commands for NuGet.",
     "tags": [
-      "Pipeline.Packaging.NuGetCommand"
+      "Metadata.Pipeline.Packaging.NuGetCommand"
     ],
     "severity": "critical",
     "patterns": [
@@ -196,6 +226,9 @@
         ],
         "confidence": "high"
       }
+    ],
+    "must-match": [
+      "task: NuGetCommand@2"
     ]
   },
   {
@@ -203,7 +236,7 @@
     "id": "AI054200",
     "description": "Identifies style, quality, design and other code characteristics.",
     "tags": [
-      "Pipeline.StaticAnalysis.RoslynAnalyzers"
+      "Metadata.Pipeline.StaticAnalysis.RoslynAnalyzers"
     ],
     "severity": "critical",
     "patterns": [
@@ -218,6 +251,9 @@
         ],
         "confidence": "high"
       }
+    ],
+    "must-match": [
+      "uses: some/roslynanalyzers-action@v1"
     ]
   },
   {
@@ -225,7 +261,7 @@
     "id": "AI054300",
     "description": "Vulnerability detection for Java code.",
     "tags": [
-      "Pipeline.StaticAnalysis.SpotBugs"
+      "Metadata.Pipeline.StaticAnalysis.SpotBugs"
     ],
     "severity": "critical",
     "patterns": [
@@ -240,6 +276,9 @@
         ],
         "confidence": "high"
       }
+    ],
+    "must-match": [
+      "run: spotbugs -textui MyProject.jar"
     ]
   },
   {
@@ -247,7 +286,7 @@
     "id": "AI054400",
     "description": "Checks TypeScript for readability and functionality errors.",
     "tags": [
-      "Pipeline.Linter.TSLint"
+      "Metadata.Pipeline.Linter.TSLint"
     ],
     "severity": "critical",
     "patterns": [
@@ -262,6 +301,9 @@
         ],
         "confidence": "high"
       }
+    ],
+    "must-match": [
+      "run: npx tslint --project tsconfig.json"
     ]
   }
 ]
